@@ -1,0 +1,22 @@
+.header {
+  z-index: 3;
+  background: var(--badges);
+  border-bottom: 1px solid var(--badges);
+  padding: 26px 0 26px 0;
+  height: 68px;
+}
+
+.headerLine {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  column-gap: 32px;
+}
+
+.active {
+  color: var(--button-hover);
+  transition: color 0.3s ease;
+}
