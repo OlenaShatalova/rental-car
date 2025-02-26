@@ -2,7 +2,12 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@mui/material';
 
-import { formatDistance, getCity, getCountry } from '../../utils/functions';
+import {
+  formatDistance,
+  getCity,
+  getCountry,
+  upperFirst,
+} from '../../utils/functions';
 
 import css from './CarItem.module.css';
 
@@ -38,7 +43,7 @@ export const CarItem = ({ data }) => {
           <span>{getCountry(address)}</span>
           <span>{rentalCompany}</span>
           <br />
-          <span>{type}</span>
+          <span>{upperFirst(type)}</span>
           <span>{formatDistance(mileage)}</span>
         </div>
       </div>

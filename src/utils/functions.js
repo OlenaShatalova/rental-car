@@ -15,3 +15,11 @@ export const formatDistance = number => {
 export const hasNextPage = (currentPage, totalPages) => {
   return currentPage < totalPages;
 };
+
+export const getShortId = str => {
+  return `id: ${str.slice(0, 4)}`;
+};
+
+export const upperFirst = str => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};

@@ -4,7 +4,7 @@ import { CssBaseline } from '@mui/material';
 
 import HomePage from './pages/HomePage/HomePage';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
-import CatalogItemPage from './pages/CatalogItemPage';
+import CatalogItemPage from './pages/CatalogItemPage/CatalogItemPage';
 import Header from './components/Header/Header';
 
 // import './App.css';

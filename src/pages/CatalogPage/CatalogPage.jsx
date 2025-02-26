@@ -55,29 +55,31 @@ function CatalogPage() {
   }, [dispatch, currentPage, loadCars]);
 
   return (
-    <Container>
+    <main>
       <section className={css.section}>
-        <SearchForm />
-        <CarsList />
+        <Container>
+          <SearchForm />
+          <CarsList />
 
-        {totalPages > currentPage && (
-          <Button
-            onClick={onLoadMore}
-            sx={{
-              color: 'var(--main)',
-              border: '1px solid var(--button)',
-              backgroundColor: 'transparent',
-              '&:hover': {
-                border: '1px solid var(--button-hover)',
+          {totalPages > currentPage && (
+            <Button
+              onClick={onLoadMore}
+              sx={{
+                color: 'var(--main)',
+                border: '1px solid var(--button)',
                 backgroundColor: 'transparent',
-              },
-            }}
-          >
-            Load More
-          </Button>
-        )}
+                '&:hover': {
+                  border: '1px solid var(--button-hover)',
+                  backgroundColor: 'transparent',
+                },
+              }}
+            >
+              Load More
+            </Button>
+          )}
+        </Container>
       </section>
-    </Container>
+    </main>
   );
 }
 

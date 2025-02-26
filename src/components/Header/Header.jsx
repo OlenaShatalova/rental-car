@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import { ReactSVG } from 'react-svg';
 
@@ -9,15 +9,18 @@ import logo from '../../assets/logoName.svg';
 import css from './Header.module.css';
 
 const Header = () => {
+  const location = useLocation();
+  const isAnyNavLinkActive = ['/', '/catalog'].includes(location.pathname);
+
   const buildCssClasses = ({ isActive }) =>
-    clsx(css.link, isActive && css.active);
+    clsx(css.link, isActive && isAnyNavLinkActive && css.active);
 
   return (
     <header className={css.header}>
       <Container>
         <div className={css.headerLine}>
           <Link to="/">
-            <ReactSVG src={logo} />
+            <ReactSVG src={logo} className={css.logo} />
           </Link>
 
           <nav>

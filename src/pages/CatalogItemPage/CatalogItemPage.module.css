@@ -1,0 +1,49 @@
+.section {
+  padding-top: 84px;
+  padding-bottom: 104px;
+}
+
+.carDetailsPage {
+  display: grid;
+  grid-template-areas:
+    'image summary'
+    'image details'
+    'order details';
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.carImage {
+  grid-area: image;
+  border-radius: 19px;
+  overflow: hidden;
+  width: 640px;
+  height: 512px;
+}
+.carSummary {
+  grid-area: summary;
+}
+.carDetails {
+  grid-area: details;
+}
+.orderForm {
+  grid-area: order;
+}
+
+@media (max-width: 1439px) {
+  .carDetailsPage {
+    grid-template-areas:
+      'image'
+      'summary'
+      'details'
+      'order';
+    grid-template-columns: 1fr;
+  }
+}
+
+.carDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
