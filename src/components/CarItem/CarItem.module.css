@@ -1,0 +1,55 @@
+.img {
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.descr {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.mainDetails {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.accent {
+  color: var(--button);
+}
+
+.secDetails {
+  text-align: start;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--gray);
+}
+
+.secDetails span {
+  margin-right: 12px;
+  position: relative;
+}
+
+.secDetails span:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: var(--gray-light);
+}
+
+.buttonLink {
+  display: block;
+  width: 100%;
+}
