@@ -12,7 +12,6 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 72px;
   row-gap: 40px;
-  /* align-items: start; */
 }
 
 .carImage {
@@ -22,6 +21,7 @@
   width: 640px;
   height: 512px;
   margin-inline: auto;
+  position: relative;
 }
 .carSummary {
   grid-area: summary;
@@ -33,6 +33,7 @@
 }
 .orderForm {
   grid-area: order;
+  margin-inline: auto;
 }
 
 @media (max-width: 1439px) {

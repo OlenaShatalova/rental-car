@@ -6,6 +6,7 @@ import Container from '../../components/Container/Container';
 import DetailsPart from '../../components/DetailsPart/DetailsPart';
 import DetailsStroke from '../../components/DetailsPart/DetailsStroke/DetailsStroke';
 import BookingForm from '../../components/BookingForm/BookingForm';
+import FavoriteIcon from '../../components/FavoriteIcon/FavoriteIcon';
 
 import { fetchCarById } from '../../api/carsApi';
 
@@ -17,15 +18,11 @@ import {
   upperFirst,
 } from '../../utils/functions';
 
-import location from '../../assets/location.svg';
-import calendar from '../../assets/calendar.svg';
-import carIcon from '../../assets/car.svg';
-import fuel from '../../assets/fuel.svg';
-import gear from '../../assets/gear.svg';
+import { calendar, carIcon, location, fuel, gear } from '../../assets/index';
 
 import css from './CatalogItemPage.module.css';
 
-function CatalogItemPage() {
+const CatalogItemPage = () => {
   const { id } = useParams();
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,8 +34,6 @@ function CatalogItemPage() {
       setError(null);
       try {
         const data = await fetchCarById(id);
-        console.log(data);
-
         setCar(data);
       } catch (error) {
         setError(error.message);
@@ -61,6 +56,7 @@ function CatalogItemPage() {
           <div className={css.carDetailsPage}>
             <div className={css.carImage}>
               <img src={car.img} alt={car.brand} />
+              <FavoriteIcon car={car} big={true} />
             </div>
 
             <div className={css.carSummary}>
@@ -123,6 +119,6 @@ function CatalogItemPage() {
       </section>
     </main>
   );
-}
+};
 
 export default CatalogItemPage;

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 import { Button } from '@mui/material';
 
 import {
@@ -11,7 +12,7 @@ import {
 
 import css from './CarItem.module.css';
 
-export const CarItem = ({ data }) => {
+export const CarItem = ({ car }) => {
   const {
     id,
     img,
@@ -23,11 +24,12 @@ export const CarItem = ({ data }) => {
     rentalCompany,
     type,
     mileage,
-  } = data;
+  } = car;
 
   return (
     <li className={css.item}>
       <img src={img} alt={brand} className={css.img} />
+      <FavoriteIcon car={car} />
 
       <div className={css.descr}>
         <div className={css.mainDetails}>

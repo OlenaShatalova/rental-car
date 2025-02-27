@@ -1,0 +1,9 @@
+export { default as outlineHeart } from './outline-heart.svg';
+export { default as fillHeart } from './fill-heart.svg';
+export { default as carIcon } from './car.svg';
+export { default as chekCircle } from './check-circle.svg';
+export { default as fuel } from './fuel.svg';
+export { default as gear } from './gear.svg';
+export { default as location } from './location.svg';
+export { default as logoName } from './logoName.svg';
+export { default as calendar } from './calendar.svg';

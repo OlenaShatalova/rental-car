@@ -15,7 +15,7 @@ const CarsList = () => {
       <Grid>
         {Array.isArray(cars) &&
           cars.map(car => {
-            return <CarItem key={car.id} data={car} />;
+            return <CarItem key={car.id} car={car} />;
           })}
       </Grid>
     </div>

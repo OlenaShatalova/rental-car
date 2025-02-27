@@ -1,3 +1,7 @@
+.item {
+  position: relative;
+}
+
 .img {
   border-radius: 14px;
   margin-bottom: 16px;

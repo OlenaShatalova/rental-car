@@ -9,7 +9,7 @@ export const getCountry = address => {
 };
 
 export const formatDistance = number => {
-  return new Intl.NumberFormat('fr-FR').format(number) + ' km';
+  return new Intl.NumberFormat('uk-UA').format(number) + ' km';
 };
 
 export const hasNextPage = (currentPage, totalPages) => {
