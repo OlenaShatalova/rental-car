@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 
 import Container from '../../components/Container/Container';
-
 import DetailsPart from '../../components/DetailsPart/DetailsPart';
 import DetailsStroke from '../../components/DetailsPart/DetailsStroke/DetailsStroke';
+import BookingForm from '../../components/BookingForm/BookingForm';
 
 import { fetchCarById } from '../../api/carsApi';
 
@@ -16,6 +17,7 @@ import {
   upperFirst,
 } from '../../utils/functions';
 
+import location from '../../assets/location.svg';
 import calendar from '../../assets/calendar.svg';
 import carIcon from '../../assets/car.svg';
 import fuel from '../../assets/fuel.svg';
@@ -62,13 +64,14 @@ function CatalogItemPage() {
             </div>
 
             <div className={css.carSummary}>
-              <div>
-                <p className={css.name}>
+              <div className={css.row1}>
+                <h3 className={css.name}>
                   {car.brand} {car.model}, {car.year}
-                </p>
+                </h3>
                 <span className={css.id}>{getShortId(car.id)}</span>
               </div>
-              <div>
+              <div className={css.row2}>
+                <ReactSVG src={location} className={css.location} />
                 <p>{getCity(car.address)}, </p>
                 <p>{getCountry(car.address)}</p>
                 <p>Mileage: {formatDistance(car.mileage)}</p>
@@ -112,7 +115,9 @@ function CatalogItemPage() {
               </DetailsPart>
             </div>
 
-            <div className={css.orderForm}>OrderForm</div>
+            <div className={css.orderForm}>
+              <BookingForm />
+            </div>
           </div>
         </Container>
       </section>

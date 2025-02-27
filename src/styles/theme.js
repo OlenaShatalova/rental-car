@@ -37,19 +37,48 @@ const theme = createTheme({
         },
       },
     },
-    // MuiContainer: {
-    //   styleOverrides: {
-    //     root: {
-    //       paddingInline: '24px', // Падінги для мобільних пристроїв
-    //       '@media (min-width:600px)': {
-    //         paddingInline: '40px', // Падінги для планшетів
-    //       },
-    //       '@media (min-width:1200px)': {
-    //         paddingInline: '120px', // Падінги для десктопів
-    //       },
-    //     },
-    //   },
-    // },
+    MuiTextField: {
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          '& .MuiFormLabel-root': {
+            left: '8px',
+            top: '-3px',
+          },
+          '& .MuiInputBase-root': {
+            backgroundColor: '#f7f7f7',
+            color: '#101828',
+            height:
+              ownerState?.name === 'comment' || ownerState?.label === 'comment'
+                ? '88px'
+                : '48px',
+            borderRadius: '12px',
+            padding:
+              ownerState?.name === 'comment' || ownerState?.label === 'comment'
+                ? '12px 20px'
+                : '14px 20px',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            border: 'none',
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            border: 'none',
+          },
+          '& .MuiInputBase-input': {
+            fontWeight: '500',
+            padding: '0',
+            '::placeholder': {
+              color: 'red',
+              opacity: 1,
+            },
+            '&:-webkit-autofill': {
+              boxShadow: 'none',
+              WebkitTextFillColor: 'inherit',
+              transition: 'background-color 5000s ease-in-out 0s',
+            },
+          },
+        }),
+      },
+    },
   },
 });
 

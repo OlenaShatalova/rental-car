@@ -10,8 +10,9 @@
     'image details'
     'order details';
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  align-items: start;
+  column-gap: 72px;
+  row-gap: 40px;
+  /* align-items: start; */
 }
 
 .carImage {
@@ -20,9 +21,12 @@
   overflow: hidden;
   width: 640px;
   height: 512px;
+  margin-inline: auto;
 }
 .carSummary {
   grid-area: summary;
+  padding-top: 20px;
+  margin-bottom: 28px;
 }
 .carDetails {
   grid-area: details;
@@ -46,4 +50,47 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+.row1 {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+.name {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+}
+.id {
+  flex-shrink: 0;
+  font-weight: 500;
+  color: #8d929a;
+}
+
+.row2 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.location {
+  width: 16px;
+  height: 16px;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--button);
+  margin-bottom: 32px;
+}
+
+.description {
+  font-weight: 500;
+  line-height: 1.25;
 }
