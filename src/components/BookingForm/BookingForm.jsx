@@ -37,7 +37,6 @@ const BookingForm = () => {
     setMessage('Booking successful!');
     setOpen(true);
 
-    // Очищення форми після успішної відправки
     setFormData({
       name: '',
       email: '',
@@ -53,39 +52,37 @@ const BookingForm = () => {
 
       <Box component="form" onSubmit={handleSubmit} className={css.form}>
         <TextField
-          label="Name"
           name="name"
           required
+          placeholder="Name *"
           value={formData.name}
           onChange={handleChange}
           fullWidth
         />
         <TextField
-          label="Email"
           name="email"
           type="email"
           required
+          placeholder="Email *"
           value={formData.email}
           onChange={handleChange}
           fullWidth
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
-            label="Booking date"
+            // label="Booking date"
             value={formData.date}
             onChange={handleDateChange}
             slotProps={{
               textField: {
                 fullWidth: true,
-                // InputProps: {
-                //   endAdornment: <span className="calendarIconTransparent" />,
-                // },
+                placeholder: 'Booking date',
               },
             }}
           />
         </LocalizationProvider>
         <TextField
-          label="Comment"
+          placeholder="Comment"
           name="comment"
           multiline
           rows={3}

@@ -7,3 +7,5 @@ export { default as gear } from './gear.svg';
 export { default as location } from './location.svg';
 export { default as logoName } from './logoName.svg';
 export { default as calendar } from './calendar.svg';
+export { default as arrowUp } from './arrowUp.svg';
+export { default as arrowDown } from './arrowDown.svg';
