@@ -12,3 +12,21 @@
   align-items: flex-start;
   gap: 8px;
 }
+
+.inputContainer {
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.inputContainer::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 100%;
+  background-color: #dadde1;
+}

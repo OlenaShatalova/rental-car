@@ -1,9 +1,11 @@
+import { useState } from 'react';
+import dayjs from 'dayjs';
+
 import { Alert, Box, Button, Snackbar, TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import css from './BookingForm.module.css';
-import { useState } from 'react';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -73,6 +75,7 @@ const BookingForm = () => {
             // label="Booking date"
             value={formData.date}
             onChange={handleDateChange}
+            minDate={dayjs()}
             slotProps={{
               textField: {
                 fullWidth: true,
@@ -81,6 +84,7 @@ const BookingForm = () => {
             }}
           />
         </LocalizationProvider>
+
         <TextField
           placeholder="Comment"
           name="comment"
@@ -110,3 +114,18 @@ const BookingForm = () => {
 };
 
 export default BookingForm;
+
+{
+  /* <StaticDatePicker
+            displayStaticWrapperAs="desktop"
+            value={formData.date}
+            minDate={dayjs()}
+            onChange={handleDateChange}
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                placeholder: 'Booking date',
+              },
+            }}
+          /> */
+}

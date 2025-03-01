@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import {
   Select,
   MenuItem,
@@ -8,110 +7,88 @@ import {
   Box,
   Input,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import { fetchBrandsList } from '../../api/carsApi';
-
-// import { setFilters } from '../../redux/filters/filtersSlice';
-// import { arrowDown, arrowUp } from '../../assets/index';
-
 import css from './SearchForm.module.css';
+import Icon from '../Icon/Icon';
+
+const FILTERS = {
+  brand: '',
+  price: '',
+  mileage: { min: null, max: null },
+};
 
 const SearchForm = () => {
   const [brandsList, setBrandsList] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState({
-    brand: '',
-    price: '',
-    mileage: { min: null, max: null },
-  });
-  // const [open, setOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState(FILTERS);
 
   useEffect(() => {
-    const loadBrands = async () => {
-      const res = await fetchBrandsList();
-      console.log(res);
-      setBrandsList(res);
-    };
-    loadBrands();
+    (async () => setBrandsList(await fetchBrandsList()))();
   }, []);
 
-  const handleSearch = async () => {
-    console.log(selectedFilters);
+  const handleChange = (key, value) => {
+    setSelectedFilters(prev => ({ ...prev, [key]: value }));
   };
+
+  const handleMileageChange = (e, type) => {
+    const value = e.target.value ? Number(e.target.value) : null;
+    if (value === null || value >= 0) {
+      handleChange('mileage', { ...selectedFilters.mileage, [type]: value });
+    }
+  };
+
+  const renderSelect = (label, key, options, placeholder) => (
+    <div
+      style={{ width: key === 'price' ? '196px' : '204px' }}
+      className={css.formDiv}
+    >
+      <InputLabel shrink>{label}</InputLabel>
+      <Select
+        displayEmpty
+        value={selectedFilters[key]}
+        onChange={e => handleChange(key, e.target.value)}
+        renderValue={selected => (selected ? selected : placeholder)}
+        fullWidth
+        IconComponent={props => <Icon name="arrowUp" {...props} />}
+        MenuProps={{ PaperProps: { [`data-select`]: key } }}
+      >
+        <MenuItem value="">All</MenuItem>
+        {options.map((option, i) => (
+          <MenuItem key={i} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+    </div>
+  );
 
   return (
     <div className={css.form}>
-      <div style={{ width: '204px' }} className={css.formDiv}>
-        <InputLabel shrink>Car brand</InputLabel>
-        <Select
-          displayEmpty
-          value={selectedFilters.brand}
-          onChange={e =>
-            setSelectedFilters(prev => ({ ...prev, brand: e.target.value }))
-          }
-          renderValue={selected => (selected ? selected : 'Choose a brand')}
-          fullWidth
-          IconComponent={ExpandMoreIcon}
-          MenuProps={{
-            PaperProps: {
-              'data-select': 'brand',
-            },
-          }}
-        >
-          <MenuItem value="">All</MenuItem>
-          {brandsList.map((brand, i) => (
-            <MenuItem key={i} value={brand}>
-              {brand}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-
-      <div style={{ width: '196px' }} className={css.formDiv}>
-        <InputLabel shrink>Price/ 1 hour</InputLabel>
-        <Select
-          displayEmpty
-          value={selectedFilters.price}
-          onChange={e =>
-            setSelectedFilters(prev => ({ ...prev, price: e.target.value }))
-          }
-          renderValue={selected =>
-            selected ? `To $${selected}` : 'Choose a price'
-          }
-          fullWidth
-          IconComponent={ExpandMoreIcon}
-        >
-          <MenuItem value="">All</MenuItem>
-          {[...Array(18).keys()].map(i => {
-            const price = 30 + i * 10;
-            return (
-              <MenuItem key={price} value={price}>
-                {price}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </div>
+      {renderSelect('Car brand', 'brand', brandsList, 'Choose a brand')}
+      {renderSelect(
+        'Price/ 1 hour',
+        'price',
+        Array.from({ length: 18 }, (_, i) => 30 + i * 10),
+        'Choose a price'
+      )}
 
       <div style={{ width: '320px' }} className={css.formDiv}>
         <InputLabel shrink>Car mileage / km</InputLabel>
-        <Box sx={{ display: 'flex' }}>
-          <Input
-            type="number"
-            placeholder="From"
-            fullWidth
-            sx={{ borderBottom: '1px solid #8d929a', padding: '5px' }}
-          />
-          <Input
-            type="number"
-            placeholder="To"
-            fullWidth
-            sx={{ borderBottom: '1px solid #8d929a', padding: '5px' }}
-          />
+        <Box className={css.inputContainer}>
+          {['min', 'max'].map(type => (
+            <Input
+              key={type}
+              type="number"
+              placeholder={type === 'min' ? 'From' : 'To'}
+              fullWidth
+              value={selectedFilters.mileage[type] || ''}
+              onChange={e => handleMileageChange(e, type)}
+              inputProps={{ min: 0 }}
+            />
+          ))}
         </Box>
       </div>
 
-      <Button onClick={handleSearch}>Search</Button>
+      <Button onClick={() => console.log(selectedFilters)}>Search</Button>
     </div>
   );
 };
