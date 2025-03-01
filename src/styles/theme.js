@@ -174,7 +174,7 @@ const theme = createTheme({
           height:
             ownerState['data-select'] === 'brand'
               ? '272px'
-              : ownerState['data-select'] === 'price'
+              : ownerState['data-select'] === 'rentalPrice'
               ? '188px'
               : 'null',
           overflowY: 'auto',

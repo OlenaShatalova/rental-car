@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCars, getCarsById } from './operations';
+import { getCars } from './operations';
+import { handlePending, handleRejected } from '../../utils/statusHelper';
 
 const INITIAL_STATE = {
   cars: null,
+  totalCars: 0,
+  currentPage: '1',
+  totalPages: 0,
   isLoading: false,
   error: null,
-  totalCars: 0,
-  currentPage: 1,
-  totalPages: 0,
 };
 
 const carsSlice = createSlice({
@@ -15,30 +16,25 @@ const carsSlice = createSlice({
   initialState: INITIAL_STATE,
   extraReducers: builder =>
     builder
-      .addCase(getCars.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getCars.fulfilled, (state, action) => {
+      .addCase(getCars.pending, handlePending)
+      .addCase(getCars.fulfilled, (state, { payload }) => {
         state.isLoading = false;
 
-        if (state.cars === null) {
-          state.cars = action.payload.cars;
+        if (payload.page === '1') {
+          state.cars = payload.cars;
         } else {
-          const newCars = action.payload.cars.filter(
+          const newCars = payload.cars.filter(
             newCar =>
               !state.cars.some(existingCar => existingCar.id === newCar.id)
           );
           state.cars = [...state.cars, ...newCars];
         }
-        state.totalCars = action.payload.totalCars;
-        state.currentPage = action.payload.page;
-        state.totalPages = action.payload.totalPages;
+
+        state.totalCars = payload.totalCars;
+        state.currentPage = payload.page;
+        state.totalPages = payload.totalPages;
       })
-      .addCase(getCars.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      }),
+      .addCase(getCars.rejected, handleRejected),
 });
 
 export default carsSlice.reducer;

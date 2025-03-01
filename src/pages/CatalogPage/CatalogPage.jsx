@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Container from '../../components/Container/Container';
@@ -7,52 +7,49 @@ import CarsList from '../../components/CarsList/CarsList';
 import { Button } from '@mui/material';
 
 import { getCars } from '../../redux/cars/operations';
+
 import {
+  selectCars,
   selectCurrentPage,
   selectTotalPages,
 } from '../../redux/cars/selectors';
+import { selectFilters } from '../../redux/filters/selectors';
 
 import css from './CatalogPage.module.css';
 
 function CatalogPage() {
   const dispatch = useDispatch();
   const currentPage = useSelector(selectCurrentPage);
-  const totalPages = useSelector(selectTotalPages);
+  const cars = useSelector(selectCars);
+  console.log(cars, currentPage);
 
-  // Обгортання loadCars в useCallback, щоб уникнути нескінченного циклу
-  const loadCars = useCallback(
-    page => {
+  const totalPages = useSelector(selectTotalPages);
+  const filters = useSelector(selectFilters);
+
+  useEffect(() => {
+    if (currentPage === '1') {
       const params = {
-        page,
-        limit: 12, // Наприклад, можна додати параметри фільтрації та сортування
+        page: 1,
+        limit: 12,
+        ...filters,
       };
 
-      dispatch(getCars(params)); // передаємо page та інші параметри в getCars
-    },
-    [dispatch]
-  );
+      dispatch(getCars(params));
+    }
+  }, [dispatch, filters, currentPage]);
 
   const onLoadMore = () => {
     if (currentPage < totalPages) {
       const nextPage = Number(currentPage) + 1;
+      const params = {
+        page: nextPage,
+        limit: 12,
+        ...filters,
+      };
 
-      loadCars(nextPage);
+      dispatch(getCars(params));
     }
   };
-
-  useEffect(() => {
-    loadCars(currentPage); // при завантаженні сторінки, завантажуємо автомобілі
-
-    // const loadCars = async () => {
-    //   try {
-    //     const data = await getCars();
-    //     dispatch(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // loadCars();
-  }, [dispatch, currentPage, loadCars]);
 
   return (
     <main>
