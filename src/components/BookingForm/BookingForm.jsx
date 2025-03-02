@@ -72,7 +72,6 @@ const BookingForm = () => {
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
-            // label="Booking date"
             value={formData.date}
             onChange={handleDateChange}
             minDate={dayjs()}
@@ -114,18 +113,3 @@ const BookingForm = () => {
 };
 
 export default BookingForm;
-
-{
-  /* <StaticDatePicker
-            displayStaticWrapperAs="desktop"
-            value={formData.date}
-            minDate={dayjs()}
-            onChange={handleDateChange}
-            slotProps={{
-              textField: {
-                fullWidth: true,
-                placeholder: 'Booking date',
-              },
-            }}
-          /> */
-}
