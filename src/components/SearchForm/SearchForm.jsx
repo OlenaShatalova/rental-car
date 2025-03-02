@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import Icon from '../Icon/Icon';
 
+import { cleanCarsList } from '../../redux/cars/carSlice';
 import { setFilters } from '../../redux/filters/filtersSlice';
 
 import { selectFilters, selectBrandsList } from '../../redux/filters/selectors';
@@ -41,6 +42,7 @@ const SearchForm = () => {
   };
 
   const handleSearch = () => {
+    dispatch(cleanCarsList());
     dispatch(setFilters(selectedFilters));
     console.log(selectedFilters); // Можна також для перевірки вивести в консоль
   };

@@ -6,8 +6,8 @@ import SearchForm from '../../components/SearchForm/SearchForm';
 import CarsList from '../../components/CarsList/CarsList';
 import { Button } from '@mui/material';
 
+import { cleanCarsList } from '../../redux/cars/carSlice';
 import { getCars } from '../../redux/cars/operations';
-
 import {
   selectCars,
   selectCurrentPage,
@@ -20,14 +20,15 @@ import css from './CatalogPage.module.css';
 function CatalogPage() {
   const dispatch = useDispatch();
   const currentPage = useSelector(selectCurrentPage);
-  const cars = useSelector(selectCars);
-  console.log(cars, currentPage);
-
   const totalPages = useSelector(selectTotalPages);
+  const cars = useSelector(selectCars);
   const filters = useSelector(selectFilters);
 
+  // console.log(cars, currentPage, totalPages);
   useEffect(() => {
-    if (currentPage === '1') {
+    if (currentPage === 1) {
+      dispatch(cleanCarsList());
+
       const params = {
         page: 1,
         limit: 12,
@@ -40,7 +41,7 @@ function CatalogPage() {
 
   const onLoadMore = () => {
     if (currentPage < totalPages) {
-      const nextPage = Number(currentPage) + 1;
+      const nextPage = currentPage + 1;
       const params = {
         page: nextPage,
         limit: 12,

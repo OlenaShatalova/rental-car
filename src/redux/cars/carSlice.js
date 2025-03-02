@@ -5,7 +5,7 @@ import { handlePending, handleRejected } from '../../utils/statusHelper';
 const INITIAL_STATE = {
   cars: null,
   totalCars: 0,
-  currentPage: '1',
+  currentPage: 1,
   totalPages: 0,
   isLoading: false,
   error: null,
@@ -14,27 +14,30 @@ const INITIAL_STATE = {
 const carsSlice = createSlice({
   name: 'cars',
   initialState: INITIAL_STATE,
+  reducers: {
+    cleanCarsList: state => {
+      state.cars = null;
+      state.currentPage = 1;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getCars.pending, handlePending)
       .addCase(getCars.fulfilled, (state, { payload }) => {
         state.isLoading = false;
 
-        if (payload.page === '1') {
+        if (Number(payload.page) === 1) {
           state.cars = payload.cars;
         } else {
-          const newCars = payload.cars.filter(
-            newCar =>
-              !state.cars.some(existingCar => existingCar.id === newCar.id)
-          );
-          state.cars = [...state.cars, ...newCars];
+          state.cars = [...state.cars, ...payload.cars];
         }
 
         state.totalCars = payload.totalCars;
-        state.currentPage = payload.page;
+        state.currentPage = Number(payload.page);
         state.totalPages = payload.totalPages;
       })
       .addCase(getCars.rejected, handleRejected),
 });
 
+export const { cleanCarsList } = carsSlice.actions;
 export default carsSlice.reducer;
