@@ -21,6 +21,7 @@ import {
 import { calendar, carIcon, location, fuel, gear } from '../../assets/index';
 
 import css from './CatalogItemPage.module.css';
+import Loader from '../../components/Loader/Loader';
 
 const CatalogItemPage = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const CatalogItemPage = () => {
       setError(null);
       try {
         const data = await fetchCarById(id);
-        setCar(data);
+        setCar(data || {});
       } catch (error) {
         setError(error.message);
       } finally {
@@ -45,76 +46,78 @@ const CatalogItemPage = () => {
     loadCar();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!car) return <p>No car found.</p>;
-
   return (
     <main>
       <section className={css.section}>
         <Container>
-          <div className={css.carDetailsPage}>
-            <div className={css.carImage}>
-              <img src={car.img} alt={car.brand} />
-              <FavoriteIcon car={car} big={true} />
-            </div>
+          {loading && <Loader height="100vh" />}
+          {error && <p className={css.error}>Error: {error}</p>}
 
-            <div className={css.carSummary}>
-              <div className={css.row1}>
-                <h3 className={css.name}>
-                  {car.brand} {car.model}, {car.year}
-                </h3>
-                <span className={css.id}>{getShortId(car.id)}</span>
+          {!loading && !error && car && Object.keys(car).length > 0 ? (
+            <div className={css.carDetailsPage}>
+              <div className={css.carImage}>
+                <img src={car.img} alt={car.brand} />
+                <FavoriteIcon car={car} big={true} />
               </div>
-              <div className={css.row2}>
-                <ReactSVG src={location} className={css.location} />
-                <p>{getCity(car.address)}, </p>
-                <p>{getCountry(car.address)}</p>
-                <p>Mileage: {formatDistance(car.mileage)}</p>
+
+              <div className={css.carSummary}>
+                <div className={css.row1}>
+                  <h3 className={css.name}>
+                    {car.brand} {car.model}, {car.year}
+                  </h3>
+                  <span className={css.id}>{getShortId(car.id)}</span>
+                </div>
+                <div className={css.row2}>
+                  <ReactSVG src={location} className={css.location} />
+                  <p>{getCity(car.address)}, </p>
+                  <p>{getCountry(car.address)}</p>
+                  <p>Mileage: {formatDistance(car.mileage)}</p>
+                </div>
+                <p className={css.price}>${car.rentalPrice}</p>
+                <p className={css.description}>{car.description}</p>
               </div>
-              <p className={css.price}>${car.rentalPrice}</p>
-              <p className={css.description}>{car.description}</p>
-            </div>
 
-            <div className={css.carDetails}>
-              <DetailsPart title="Rental Conditions: ">
-                {car &&
-                  car.rentalConditions.map((item, index) => (
-                    <DetailsStroke key={index} text={item} />
-                  ))}
-              </DetailsPart>
+              <div className={css.carDetails}>
+                <DetailsPart title="Rental Conditions: ">
+                  {car &&
+                    car.rentalConditions.map((item, index) => (
+                      <DetailsStroke key={index} text={item} />
+                    ))}
+                </DetailsPart>
 
-              <DetailsPart title="Car Specifications:">
-                <DetailsStroke icon={calendar} text={`Year: ${car.year}`} />
-                <DetailsStroke
-                  icon={carIcon}
-                  text={`Type: ${upperFirst(car.type)}`}
-                />
-                <DetailsStroke
-                  icon={fuel}
-                  text={`Fuel Consumption: ${car.fuelConsumption}`}
-                />
-                <DetailsStroke
-                  icon={gear}
-                  text={`Engine Size: ${car.engineSize}`}
-                />
-              </DetailsPart>
+                <DetailsPart title="Car Specifications:">
+                  <DetailsStroke icon={calendar} text={`Year: ${car.year}`} />
+                  <DetailsStroke
+                    icon={carIcon}
+                    text={`Type: ${upperFirst(car.type)}`}
+                  />
+                  <DetailsStroke
+                    icon={fuel}
+                    text={`Fuel Consumption: ${car.fuelConsumption}`}
+                  />
+                  <DetailsStroke
+                    icon={gear}
+                    text={`Engine Size: ${car.engineSize}`}
+                  />
+                </DetailsPart>
 
-              <DetailsPart title="Accessories and functionalities: ">
-                {car &&
-                  [
-                    ...(car.accessories || []),
-                    ...(car.functionalities || []),
+                <DetailsPart title="Accessories and functionalities: ">
+                  {[
+                    ...(car?.accessories || []),
+                    ...(car?.functionalities || []),
                   ].map((item, index) => (
                     <DetailsStroke key={index} text={item} />
                   ))}
-              </DetailsPart>
-            </div>
+                </DetailsPart>
+              </div>
 
-            <div className={css.orderForm}>
-              <BookingForm />
+              <div className={css.orderForm}>
+                <BookingForm />
+              </div>
             </div>
-          </div>
+          ) : (
+            !loading && !error && <p>No car found.</p>
+          )}
         </Container>
       </section>
     </main>

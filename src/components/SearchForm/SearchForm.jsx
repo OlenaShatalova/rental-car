@@ -10,18 +10,27 @@ import {
   Input,
 } from '@mui/material';
 import Icon from '../Icon/Icon';
+import Loader from '../Loader/Loader';
 
 import { cleanCarsList } from '../../redux/cars/carSlice';
 import { setFilters } from '../../redux/filters/filtersSlice';
 
-import { selectFilters, selectBrandsList } from '../../redux/filters/selectors';
+import { getBrandsList } from '../../redux/filters/operations';
+import {
+  selectBrandsList,
+  selectFilters,
+  selectIsBrandsLoading,
+  selectBrandsError,
+} from '../../redux/filters/selectors';
 
 import css from './SearchForm.module.css';
-import { getBrandsList } from '../../redux/filters/operations';
 
 const SearchForm = () => {
   const reduxFilters = useSelector(selectFilters);
   const brandsList = useSelector(selectBrandsList);
+  const isLoadingBrands = useSelector(selectIsBrandsLoading);
+  const error = useSelector(selectBrandsError);
+
   const [selectedFilters, setSelectedFilters] = useState(reduxFilters);
   const dispatch = useDispatch();
 
@@ -44,7 +53,6 @@ const SearchForm = () => {
   const handleSearch = () => {
     dispatch(cleanCarsList());
     dispatch(setFilters(selectedFilters));
-    console.log(selectedFilters); // Можна також для перевірки вивести в консоль
   };
 
   const renderSelect = (label, key, options, placeholder, width = '204px') => (
@@ -71,7 +79,14 @@ const SearchForm = () => {
 
   return (
     <div className={css.form}>
-      {renderSelect('Car brand', 'brand', brandsList, 'Choose a brand')}
+      {isLoadingBrands ? (
+        <Loader />
+      ) : error ? (
+        <div className={css.error}>Error loading brands: {error}</div>
+      ) : (
+        <>{renderSelect('Car brand', 'brand', brandsList, 'Choose a brand')}</>
+      )}
+
       {renderSelect(
         'Price/ 1 hour',
         'rentalPrice',

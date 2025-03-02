@@ -5,12 +5,14 @@ import Container from '../../components/Container/Container';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import CarsList from '../../components/CarsList/CarsList';
 import { Button } from '@mui/material';
+import Loader from '../../components/Loader/Loader';
 
 import { cleanCarsList } from '../../redux/cars/carSlice';
 import { getCars } from '../../redux/cars/operations';
 import {
-  selectCars,
   selectCurrentPage,
+  selectError,
+  selectIsCarsLoading,
   selectTotalPages,
 } from '../../redux/cars/selectors';
 import { selectFilters } from '../../redux/filters/selectors';
@@ -21,10 +23,10 @@ function CatalogPage() {
   const dispatch = useDispatch();
   const currentPage = useSelector(selectCurrentPage);
   const totalPages = useSelector(selectTotalPages);
-  const cars = useSelector(selectCars);
   const filters = useSelector(selectFilters);
+  const isCarLoading = useSelector(selectIsCarsLoading);
+  const error = useSelector(selectError);
 
-  // console.log(cars, currentPage, totalPages);
   useEffect(() => {
     if (currentPage === 1) {
       dispatch(cleanCarsList());
@@ -52,6 +54,13 @@ function CatalogPage() {
     }
   };
 
+  const renderError = () => {
+    if (error) {
+      return <div className={css.error}>Something went wrong: {error}</div>;
+    }
+    return null;
+  };
+
   return (
     <main>
       <section className={css.section}>
@@ -59,7 +68,10 @@ function CatalogPage() {
           <SearchForm />
           <CarsList />
 
-          {totalPages > currentPage && (
+          {renderError()}
+          {isCarLoading && <Loader />}
+
+          {totalPages > currentPage && !isCarLoading && (
             <Button
               onClick={onLoadMore}
               sx={{
