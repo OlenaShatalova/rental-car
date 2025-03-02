@@ -30,3 +30,15 @@
   height: 100%;
   background-color: #dadde1;
 }
+
+.contBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+
+.contBtn svg {
+  position: absolute;
+  right: -28px;
+}

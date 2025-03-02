@@ -12,6 +12,10 @@ export const formatDistance = number => {
   return new Intl.NumberFormat('uk-UA').format(number) + ' km';
 };
 
+export const formatInputN = number => {
+  return new Intl.NumberFormat('en-EN').format(number);
+};
+
 export const hasNextPage = (currentPage, totalPages) => {
   return currentPage < totalPages;
 };

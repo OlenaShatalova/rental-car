@@ -107,13 +107,6 @@ const theme = createTheme({
             right: '14px',
             top: '19px',
           },
-          // '& .MuiInputBase-root': {
-          //   height:
-          //     ownerState?.name === 'mileage' || ownerState?.label === 'mileage'
-          //       ? ''
-          //       : '',
-          //   padding: '14px 20px',
-          // },
           '& .MuiOutlinedInput-notchedOutline': {
             border: 'none',
           },
@@ -149,20 +142,16 @@ const theme = createTheme({
               WebkitAppearance: 'none',
               // margin: 0,
             },
+          '& .MuiTypography-root': {
+            color: '#101828',
+          },
         },
         input: {
           fontWeight: '500',
-          // color: 'red', інпута доробити
-
-          '&::placeholder': {
-            color: '#101828', // Колір плейсхолдера
-            opacity: 1, // Плейсхолдер не зникатиме при введенні
-            fontWeight: '500',
-          },
-          // Задаємо відступи для введеного тексту
-          '&:not(:placeholder-shown)': {
-            paddingLeft: '12px', // Відступ після введеного тексту
-          },
+        },
+        inputAdornedStart: {
+          lineHeight: 1.25,
+          padding: '0',
         },
       },
     },

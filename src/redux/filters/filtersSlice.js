@@ -22,6 +22,9 @@ const filtersSlice = createSlice({
       if (!payload) return;
       state.filters = { ...state.filters, ...payload };
     },
+    resetFilters: state => {
+      state.filters = INITIAL_STATE.filters;
+    },
   },
   extraReducers: builder => {
     builder
@@ -34,5 +37,5 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { setFilters } = filtersSlice.actions;
+export const { setFilters, resetFilters } = filtersSlice.actions;
 export default filtersSlice.reducer;

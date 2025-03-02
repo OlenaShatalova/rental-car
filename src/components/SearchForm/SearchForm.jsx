@@ -8,12 +8,14 @@ import {
   InputLabel,
   Box,
   Input,
+  InputAdornment,
 } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Icon from '../Icon/Icon';
 import Loader from '../Loader/Loader';
 
 import { cleanCarsList } from '../../redux/cars/carSlice';
-import { setFilters } from '../../redux/filters/filtersSlice';
+import { resetFilters, setFilters } from '../../redux/filters/filtersSlice';
 
 import { getBrandsList } from '../../redux/filters/operations';
 import {
@@ -32,6 +34,7 @@ const SearchForm = () => {
   const error = useSelector(selectBrandsError);
 
   const [selectedFilters, setSelectedFilters] = useState(reduxFilters);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,12 +51,28 @@ const SearchForm = () => {
     if (value === '' || (Number(value) > 0 && !isNaN(value))) {
       handleChange(key, value);
     }
+    handleChange(key, value);
   };
 
   const handleSearch = () => {
     dispatch(cleanCarsList());
     dispatch(setFilters(selectedFilters));
+    // console.log(selectedFilters);
   };
+
+  const handleReset = () => {
+    dispatch(resetFilters());
+    setSelectedFilters({
+      brand: '',
+      rentalPrice: '',
+      minMileage: '',
+      maxMileage: '',
+    });
+  };
+
+  const areFiltersEmpty = Object.values(selectedFilters).every(
+    val => val === ''
+  );
 
   const renderSelect = (label, key, options, placeholder, width = '204px') => (
     <div style={{ width }} className={css.formDiv}>
@@ -102,7 +121,11 @@ const SearchForm = () => {
             <Input
               key={type}
               type="number"
-              placeholder={type === 'minMileage' ? 'From' : 'To'}
+              startAdornment={
+                <InputAdornment position="start">
+                  {type === 'minMileage' ? 'From' : 'To'}
+                </InputAdornment>
+              }
               fullWidth
               value={selectedFilters[type]}
               onChange={e => handleMileageChange(type, e.target.value)}
@@ -112,7 +135,13 @@ const SearchForm = () => {
         </Box>
       </div>
 
-      <Button onClick={handleSearch}>Search</Button>
+      <div className={css.contBtn}>
+        <Button onClick={handleSearch}>Search</Button>
+
+        {!areFiltersEmpty && (
+          <DeleteOutlineIcon onClick={handleReset} sx={{ opacity: '0.5' }} />
+        )}
+      </div>
     </div>
   );
 };
