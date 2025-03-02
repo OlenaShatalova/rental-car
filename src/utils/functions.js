@@ -12,8 +12,13 @@ export const formatDistance = number => {
   return new Intl.NumberFormat('uk-UA').format(number) + ' km';
 };
 
-export const formatInputN = number => {
-  return new Intl.NumberFormat('en-EN').format(number);
+export const formatNumberWithCommas = value => {
+  if (!value) return value;
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+export const formatMileageInput = value => {
+  return value.replace(/[^\d]/g, '');
 };
 
 export const hasNextPage = (currentPage, totalPages) => {

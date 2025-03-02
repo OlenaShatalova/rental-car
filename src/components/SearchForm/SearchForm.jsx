@@ -26,6 +26,10 @@ import {
 } from '../../redux/filters/selectors';
 
 import css from './SearchForm.module.css';
+import {
+  formatNumberWithCommas,
+  formatMileageInput,
+} from '../../utils/functions';
 
 const SearchForm = () => {
   const reduxFilters = useSelector(selectFilters);
@@ -41,23 +45,40 @@ const SearchForm = () => {
     if (brandsList.length === 0) {
       dispatch(getBrandsList());
     }
-  }, [dispatch, brandsList.length]);
+
+    // Форматування полів minMileage та maxMileage при завантаженні
+    setSelectedFilters(prev => ({
+      ...prev,
+      minMileage: formatNumberWithCommas(prev.minMileage),
+      maxMileage: formatNumberWithCommas(prev.maxMileage),
+    }));
+  }, [dispatch, brandsList.length, reduxFilters]);
 
   const handleChange = (key, value) => {
     setSelectedFilters(prev => ({ ...prev, [key]: value }));
   };
 
   const handleMileageChange = (key, value) => {
-    if (value === '' || (Number(value) > 0 && !isNaN(value))) {
-      handleChange(key, value);
-    }
-    handleChange(key, value);
+    let formattedNum = formatMileageInput(value);
+
+    setSelectedFilters(prev => ({
+      ...prev,
+      [key]: formatNumberWithCommas(formattedNum),
+    }));
   };
 
   const handleSearch = () => {
     dispatch(cleanCarsList());
-    dispatch(setFilters(selectedFilters));
-    // console.log(selectedFilters);
+
+    const cleanMileage = value => value.replace(/,/g, '');
+
+    dispatch(
+      setFilters({
+        ...selectedFilters,
+        minMileage: cleanMileage(selectedFilters.minMileage),
+        maxMileage: cleanMileage(selectedFilters.maxMileage),
+      })
+    );
   };
 
   const handleReset = () => {
@@ -120,7 +141,7 @@ const SearchForm = () => {
           {['minMileage', 'maxMileage'].map(type => (
             <Input
               key={type}
-              type="number"
+              // type="number"
               startAdornment={
                 <InputAdornment position="start">
                   {type === 'minMileage' ? 'From' : 'To'}
@@ -129,7 +150,7 @@ const SearchForm = () => {
               fullWidth
               value={selectedFilters[type]}
               onChange={e => handleMileageChange(type, e.target.value)}
-              inputProps={{ min: 1 }}
+              inputProps={{ min: 1, maxLength: 7 }}
             />
           ))}
         </Box>

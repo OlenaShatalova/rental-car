@@ -79,7 +79,7 @@ function CatalogPage() {
           {renderError()}
           {isCarLoading && <Loader />}
 
-          {totalPages > currentPage && !isCarLoading && (
+          {totalPages > currentPage && !isCarLoading && !error && (
             <Button
               onClick={onLoadMore}
               sx={{
