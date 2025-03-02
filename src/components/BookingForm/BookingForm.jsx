@@ -35,7 +35,6 @@ const BookingForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('Form data:', formData);
     setMessage('Booking successful!');
     setOpen(true);
 
