@@ -5,16 +5,6 @@ const carInstance = axios.create({
 });
 
 export const fetchCars = async params => {
-  // const Params = {
-  //   limit: 12,
-  //   page: 1,
-  //   brand: '',
-  //   rentalPrice: '',
-  //   minMileage: '',
-  //   maxMileage: '',
-  //   ...params,
-  // };
-
   const { data } = await carInstance.get('/cars', { params });
   return data;
 };
