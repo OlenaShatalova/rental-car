@@ -246,7 +246,7 @@ const theme = createTheme({
             position: 'absolute',
             inset: 0,
             background:
-              "url('/public/calendar-background.svg') no-repeat center bottom / cover",
+              "url('/calendar-background.svg') no-repeat center bottom / cover",
             width: '100%',
             height: '100%',
             transform: 'scaleY(-1)', // Перевертає тільки фон
