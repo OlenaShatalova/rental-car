@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb'; // Локаль для правильного порядку днів
 
 import { Alert, Box, Button, Snackbar, TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -69,11 +70,12 @@ const BookingForm = () => {
           onChange={handleChange}
           fullWidth
         />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
           <DatePicker
             value={formData.date}
             onChange={handleDateChange}
             minDate={dayjs()}
+            format="ddd DD-MM-YYYY"
             slotProps={{
               textField: {
                 fullWidth: true,

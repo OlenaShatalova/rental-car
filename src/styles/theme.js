@@ -1,3 +1,4 @@
+import { Margin } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -226,23 +227,137 @@ const theme = createTheme({
         },
       },
     },
-
+    /// CALENDAR
     MuiDatePicker: {
       styleOverrides: {
         root: {
-          height: 'auto', // Встановлюємо висоту на авто
-          '& .MuiInputBase-root': {
-            height: 'auto', // Висота для внутрішнього елементу
-            padding: '12px 20px', // Паддінг
+          // height: 'auto', // Встановлюємо висоту на авто
+        },
+      },
+    },
+    MuiPopper: {
+      styleOverrides: {
+        root: {
+          width: '276px',
+          maxHeight: '328px',
+          position: 'relative',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            background:
+              "url('/public/calendar-background.svg') no-repeat center bottom / cover",
+            width: '100%',
+            height: '100%',
+            transform: 'scaleY(-1)', // Перевертає тільки фон
           },
-          '& .MuiOutlinedInput-notchedOutline': {
-            border: 'none', // Прибираємо обводку
-          },
-          '& .MuiInputBase-input': {
-            padding: '0', // Паддінг для тексту
-            fontSize: '16px',
-            color: '#101828',
-          },
+        },
+      },
+    },
+    MuiPickersPopper: {
+      styleOverrides: {
+        root: {
+          // Стилізація для Popper в DatePicker
+        },
+        paper: {
+          // Стилізація для контейнера календаря
+          width: '276px',
+          height: 'auto',
+          background: 'transparent',
+          boxShadow: 'none',
+          padding: '22px 12px',
+        },
+      },
+    },
+
+    MuiPickersLayout: {
+      styleOverrides: {
+        root: {
+          background: 'transparent',
+          /// тут грід вказано
+          // fontFamily: 'Inter',
+          // Загальний стиль для компонента календаря
+        },
+      },
+    },
+    MuiDateCalendar: {
+      styleOverrides: {
+        root: {
+          // Стилізація календаря
+
+          width: '100%',
+          height: '100%',
+          // background: 'green',
+          // scroll: 'none',
+        },
+      },
+    },
+
+    MuiPickersCalendarHeader: {
+      /// HEADER ========
+      styleOverrides: {
+        root: {
+          // Стилізація заголовка календаря MONTH
+          position: 'relative',
+          maxHeight: '24px',
+          minHeight: '24px',
+
+          padding: '0',
+          margin: '0 0 14px 0',
+        },
+        labelContainer: {
+          marginInline: 'auto',
+        },
+        label: {
+          fontFamily: "'Inter', sans-serif",
+          margin: '0',
+          width: '100%',
+
+          // Стилізація тексту з назвою місяця
+        },
+        switchViewButton: {
+          display: 'none',
+        },
+      },
+    },
+    MuiPickersArrowSwitcher: {
+      styleOverrides: {
+        root: {
+          // Стилізація стрілок для перемикання місяців
+          position: 'absolute',
+          inset: '0',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          // background: ' red',
+        },
+        button: {
+          // Стилізація кнопок перемикання місяців
+        },
+      },
+    },
+    MuiDayCalendar: {
+      styleOverrides: {
+        root: {
+          // Стилізація сітки з днями
+        },
+        weekDayLabel: {
+          width: '100%',
+          height: '100%',
+          // Стилізація назв днів тижня
+        },
+      },
+    },
+    MuiPickersDay: {
+      styleOverrides: {
+        root: {
+          // Стилізація дня в календарі
+        },
+        today: {
+          // Стиль для поточного дня
+        },
+        selected: {
+          // Стиль для вибраного дня
         },
       },
     },
