@@ -1,4 +1,3 @@
-import { Margin } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -339,26 +338,42 @@ const theme = createTheme({
     MuiDayCalendar: {
       styleOverrides: {
         root: {
-          // Стилізація сітки з днями
-        },
-        weekDayLabel: {
+          // Стилізація сітки з днями (весь)
           width: '100%',
           height: '100%',
+        },
+        weekDayLabel: {
           // Стилізація назв днів тижня
+          width: '100%',
+          height: '100%',
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: '600',
+          lineHeight: '1.2',
         },
       },
     },
     MuiPickersDay: {
       styleOverrides: {
-        root: {
-          // Стилізація дня в календарі
-        },
-        today: {
-          // Стиль для поточного дня
-        },
-        selected: {
-          // Стиль для вибраного дня
-        },
+        root: ({ ownerState }) => ({
+          //// Стилізація дня в календарі
+          border: 'none',
+          //// Стиль для поточного дня
+          ...(ownerState.today && {
+            // backgroundColor: '#ffeb3b',
+            color: '#0B44CD',
+            border: '1px solid #0B44CD !important',
+            '&:focus': { border: 'none !important' },
+            '&:hover': { border: 'none !important' },
+          }),
+
+          //// Стиль для вибраного дня
+          ...(ownerState.selected && {
+            backgroundColor: '#3470FF !important',
+            border: 'none',
+            '&:focus': { border: 'none' },
+            '&:hover': { border: 'none' },
+          }),
+        }),
       },
     },
   },

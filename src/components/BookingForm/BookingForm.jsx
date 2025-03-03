@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb'; // Локаль для правильного порядку днів
 
