@@ -59,6 +59,7 @@ const theme = createTheme({
               ownerState?.name === 'comment' || ownerState?.label === 'comment'
                 ? '12px 20px'
                 : '14px 20px',
+            //////
           },
           '& .MuiOutlinedInput-notchedOutline': {
             border: 'none',
@@ -78,7 +79,7 @@ const theme = createTheme({
             },
             '&:-webkit-autofill': {
               boxShadow: 'none',
-              WebkitTextFillColor: 'inherit',
+              WebkitTextFillColor: '#8E929A',
               transition: 'background-color 5000s ease-in-out 0s',
             },
           },
@@ -190,7 +191,6 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           padding: '0',
-          marginRight: '10px', // Відступ для зсуву контенту
           color: '#8d929a',
           display: 'flex',
           flexDirection: 'column',
@@ -226,12 +226,11 @@ const theme = createTheme({
         },
       },
     },
+
     /// CALENDAR
     MuiDatePicker: {
       styleOverrides: {
-        root: {
-          // height: 'auto', // Встановлюємо висоту на авто
-        },
+        root: {},
       },
     },
     MuiPopper: {
@@ -248,7 +247,7 @@ const theme = createTheme({
               "url('/calendar-background.svg') no-repeat center bottom / cover",
             width: '100%',
             height: '100%',
-            transform: 'scaleY(-1)', // Перевертає тільки фон
+            transform: 'scaleY(-1)',
           },
         },
       },
@@ -268,14 +267,11 @@ const theme = createTheme({
         },
       },
     },
-
     MuiPickersLayout: {
       styleOverrides: {
         root: {
-          background: 'transparent',
-          /// тут грід вказано
-          // fontFamily: 'Inter',
           // Загальний стиль для компонента календаря
+          background: 'transparent',
         },
       },
     },
@@ -283,17 +279,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           // Стилізація календаря
-
           width: '100%',
           height: '100%',
-          // background: 'green',
-          // scroll: 'none',
         },
       },
     },
 
     MuiPickersCalendarHeader: {
-      /// HEADER ========
       styleOverrides: {
         root: {
           // Стилізація заголовка календаря MONTH
@@ -359,9 +351,9 @@ const theme = createTheme({
           border: 'none',
           //// Стиль для поточного дня
           ...(ownerState.today && {
-            // backgroundColor: '#ffeb3b',
+            backgroundColor: 'transparent !important',
             color: '#0B44CD',
-            border: '1px solid #0B44CD !important',
+            boxShadow: '0 0 0 1px #0B44CD !important',
             '&:focus': { border: 'none !important' },
             '&:hover': { border: 'none !important' },
           }),

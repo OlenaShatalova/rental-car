@@ -19,6 +19,7 @@ import {
 import { selectFilters } from '../../redux/filters/selectors';
 
 import css from './CatalogPage.module.css';
+import { selectShowFavorites } from '../../redux/favorites/selectors';
 
 function CatalogPage() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function CatalogPage() {
   const currentPage = useSelector(selectCurrentPage);
   const totalPages = useSelector(selectTotalPages);
   const filters = useSelector(selectFilters);
+  const showFavorites = useSelector(selectShowFavorites);
   const isCarLoading = useSelector(selectIsCarsLoading);
   const error = useSelector(selectError);
 
@@ -79,22 +81,25 @@ function CatalogPage() {
           {renderError()}
           {isCarLoading && <Loader />}
 
-          {totalPages > currentPage && !isCarLoading && !error && (
-            <Button
-              onClick={onLoadMore}
-              sx={{
-                color: 'var(--main)',
-                border: '1px solid var(--button)',
-                backgroundColor: 'transparent',
-                '&:hover': {
-                  border: '1px solid var(--button-hover)',
+          {!showFavorites &&
+            totalPages > currentPage &&
+            !isCarLoading &&
+            !error && (
+              <Button
+                onClick={onLoadMore}
+                sx={{
+                  color: 'var(--main)',
+                  border: '1px solid var(--button)',
                   backgroundColor: 'transparent',
-                },
-              }}
-            >
-              Load More
-            </Button>
-          )}
+                  '&:hover': {
+                    border: '1px solid var(--button-hover)',
+                    backgroundColor: 'transparent',
+                  },
+                }}
+              >
+                Load More
+              </Button>
+            )}
         </Container>
       </section>
     </main>

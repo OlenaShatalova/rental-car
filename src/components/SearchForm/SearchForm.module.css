@@ -38,7 +38,22 @@
   position: relative;
 }
 
-.contBtn svg {
+.deleteSearch {
   position: absolute;
   right: -28px;
+}
+
+.allFavorites {
+  position: absolute;
+  right: -150px;
+  height: 32px;
+}
+
+.allFavorites svg {
+  opacity: 0.9;
+  width: 34px;
+  height: auto;
+}
+.opacity {
+  opacity: 0.3;
 }

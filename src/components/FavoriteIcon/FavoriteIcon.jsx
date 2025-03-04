@@ -5,7 +5,7 @@ import {
   addFavorite,
   removeFavorite,
 } from '../../redux/favorites/favoritesSlice.js';
-import { selectFavorites } from '../../redux/favorites/favoritesSlice.js';
+import { selectFavorites } from '../../redux/favorites/selectors.js';
 
 import { fillHeart, outlineHeart } from '../../assets/index';
 

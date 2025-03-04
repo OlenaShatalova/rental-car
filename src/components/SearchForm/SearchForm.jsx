@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ReactSVG } from 'react-svg';
+import clsx from 'clsx';
 
 import {
   Select,
@@ -16,24 +18,34 @@ import Loader from '../Loader/Loader';
 
 import { cleanCarsList } from '../../redux/cars/carSlice';
 import { resetFilters, setFilters } from '../../redux/filters/filtersSlice';
+import { showFavorite } from '../../redux/favorites/favoritesSlice';
 
 import { getBrandsList } from '../../redux/filters/operations';
+
 import {
   selectBrandsList,
   selectFilters,
   selectIsBrandsLoading,
   selectBrandsError,
 } from '../../redux/filters/selectors';
+import {
+  selectFavorites,
+  selectShowFavorites,
+} from '../../redux/favorites/selectors';
 
-import css from './SearchForm.module.css';
 import {
   formatNumberWithCommas,
   formatMileageInput,
 } from '../../utils/functions';
+import { fillHeart } from '../../assets';
+
+import css from './SearchForm.module.css';
 
 const SearchForm = () => {
   const reduxFilters = useSelector(selectFilters);
   const brandsList = useSelector(selectBrandsList);
+  const favoritesList = useSelector(selectFavorites);
+  const showFavorites = useSelector(selectShowFavorites);
   const isLoadingBrands = useSelector(selectIsBrandsLoading);
   const error = useSelector(selectBrandsError);
 
@@ -91,9 +103,14 @@ const SearchForm = () => {
     });
   };
 
+  const handleFavorite = () => {
+    dispatch(showFavorite());
+  };
+
   const areFiltersEmpty = Object.values(selectedFilters).every(
     val => val === ''
   );
+  const areFavoritesListEmpty = favoritesList.length === 0;
 
   const renderSelect = (label, key, options, placeholder, width = '204px') => (
     <div style={{ width }} className={css.formDiv}>
@@ -160,7 +177,21 @@ const SearchForm = () => {
         <Button onClick={handleSearch}>Search</Button>
 
         {!areFiltersEmpty && (
-          <DeleteOutlineIcon onClick={handleReset} sx={{ opacity: '0.5' }} />
+          <DeleteOutlineIcon
+            onClick={handleReset}
+            sx={{ opacity: '0.5' }}
+            className={css.deleteSearch}
+          />
+        )}
+
+        {!areFavoritesListEmpty && (
+          <ReactSVG
+            src={fillHeart}
+            onClick={handleFavorite}
+            className={clsx(css.allFavorites, {
+              [css.opacity]: !showFavorites,
+            })}
+          />
         )}
       </div>
     </div>
