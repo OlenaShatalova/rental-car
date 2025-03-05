@@ -10,22 +10,29 @@ import {
   selectFavorites,
   selectShowFavorites,
 } from '../../redux/favorites/selectors';
+import { selectFilters } from '../../redux/filters/selectors';
 
 const CarsList = () => {
   const cars = useSelector(selectCars);
   const favorites = useSelector(selectFavorites);
   const showFavorites = useSelector(selectShowFavorites);
+  const filters = useSelector(selectFilters);
+  console.log(favorites);
 
-  // const filteredCars = showFavorites
-  //   ? Array.isArray(cars)
-  //     ? cars.filter(car => favorites.some(fav => fav.id === car.id))
-  //     : []
-  //   : Array.isArray(cars)
-  //   ? cars
-  //   : [];
+  const cleanMileage = value => String(value).replace(/,/g, '');
+
+  const filteredFavorites = favorites.filter(
+    ({ brand, rentalPrice, mileage }) =>
+      (!filters.brand || brand === filters.brand) &&
+      (!filters.rentalPrice || rentalPrice <= filters.rentalPrice) &&
+      (!filters.minMileage ||
+        Number(mileage) >= Number(cleanMileage(filters.minMileage))) &&
+      (!filters.maxMileage ||
+        Number(mileage) <= Number(cleanMileage(filters.maxMileage)))
+  );
 
   const filteredCars = showFavorites
-    ? favorites
+    ? filteredFavorites
     : Array.isArray(cars)
     ? cars
     : [];
